@@ -27,8 +27,11 @@ device’s hostname:
 
 ::
 
+  ---
   - name: Fortinet Console Example Playbook - User Remote Console Server to Factory Reset FortiGate Firewall
     hosts: fortigate01
+    connection: local
+    gather_facts: False
     collections:
       - fortinet.console
     tasks:
@@ -42,9 +45,10 @@ device’s hostname:
         rcs_fgt_password: "{{ dev_password }}"
         rcs_fgt_become: "{{ term_become|default(omit) }}"
         rcs_fgt_action: "factoryreset"
-    register: fortigate_remote_console_result
+      register: fortigate_remote_console_result
+      delegate_to: localhost
     - debug:
-      msg: "{{ fortigate_remote_console_result }}"
+        msg: "{{ fortigate_remote_console_result }}"
 
 
 there are several options which might need you special care:
